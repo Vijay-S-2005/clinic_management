@@ -9,10 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.21.1",
     "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
     "next": "15.0.0",
+    "next-auth": "^4.24.8",
     "react": "19.0.0-rc-65a56d0e-20241020",
-    "react-dom": "19.0.0-rc-65a56d0e-20241020"
+    "react-dom": "19.0.0-rc-65a56d0e-20241020",
+    "react-toastify": "^10.0.6",
+    "router": "^2.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
