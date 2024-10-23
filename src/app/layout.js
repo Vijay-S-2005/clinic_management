@@ -29,11 +29,13 @@
 //   );
 // }
 import "./globals.css";
+import ClientSessionProvider from "@/components/ClientSessionProvider";
+
 export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        {children}
+        <ClientSessionProvider>{children}</ClientSessionProvider>
       </body>
     </html>
   );

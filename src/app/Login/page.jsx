@@ -3,10 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Assets } from "../../../public/Assets";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { signIn, getSession, useSession } from "next-auth/react";
 
 export default function Login() {
   const [selectedRole, setSelectedRole] = useState("doctor");
@@ -14,6 +14,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const router = useRouter();
+  const { data: session, status } = useSession();
+  console.log("session", session, status);
 
   const validateForm = () => {
     const validationErrors = {};
