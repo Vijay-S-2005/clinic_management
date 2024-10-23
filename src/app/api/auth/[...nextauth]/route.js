@@ -22,10 +22,13 @@ export const authOptions = {
         });
 
         // Validate user and password
-        if (
-          !user ||
-          !(await bcrypt.compare(credentials.password, user.password))
-        ) {
+        // if (
+        //   !user ||
+        //   !(await bcrypt.compare(credentials.password, user.password))
+        // ) {
+        //   throw new Error("Invalid email or password");
+        // }
+        if (!user || !(credentials.password === user.password)) {
           throw new Error("Invalid email or password");
         }
 
