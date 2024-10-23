@@ -15,7 +15,6 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("inside authorize (login) credentials", credentials);
         // Find user by email
         const user = await prisma.user.findUnique({
           where: { email: credentials.email, type: credentials.type },
@@ -62,14 +61,12 @@ export const authOptions = {
         token.lastName = fullUser.lastName;
         token.type = fullUser.type;
         token.phoneNumber = fullUser.phoneNumber;
-        console.log("Updated token:", token); // Log updated token
       }
 
       return token;
     },
 
     async session({ session, token }) {
-      console.log("Session before update:", session); // Log session before update
       session.user.userId = token.userId;
       session.user.email = token.email;
       session.user.name = token.name;
@@ -77,7 +74,6 @@ export const authOptions = {
       session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
       session.user.phoneNumber = token.phoneNumber;
-      console.log("Session after update:", session); // Log session after update
       return session;
     },
   },
