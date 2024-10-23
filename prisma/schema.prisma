@@ -22,5 +22,43 @@ model User {
   password     String    @db.VarChar(255)
   type         usertype
   createdAt    DateTime  @default(now())
+
+    // Relations
+  accounts     Account[]       // Relation with Account for OAuth providers
+  sessions     Session[]       // Relation with Session for session management
 }
 
+
+
+
+
+model Account {
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  provider           String   @db.VarChar(255)
+  providerAccountId  String   @db.VarChar(255)
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?  @db.VarChar(255)
+  scope              String?  @db.Text
+  id_token           String?  @db.Text
+  session_state      String?  @db.Text
+  user               User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier   String   @db.VarChar(255)
+  token        String   @unique
+  expires      DateTime
+}

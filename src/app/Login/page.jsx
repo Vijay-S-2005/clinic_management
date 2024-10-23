@@ -45,6 +45,7 @@ export default function Login() {
           type: selectedRole, // passing user role here
           redirect: false,
         });
+        console.log("result", result);
         if (!result.error) {
           toast.success("Login successful!", {
             position: "top-right",

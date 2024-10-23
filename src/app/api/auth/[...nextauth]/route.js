@@ -51,26 +51,25 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       let userId = user?.userId || token?.userId;
-      // Use the user ID from the session to fetch full user data
       const fullUser = await prisma.user.findUnique({
         where: { userId },
       });
 
       if (fullUser) {
         token.userId = fullUser.userId;
-        token.email = fullUser.email; // Store email in the session
-        token.firstName = fullUser.firstName; // Store first name in the session
-        token.lastName = fullUser.lastName; // Store last name in the session
-        token.type = fullUser.type; // Store type in the session
-        token.phoneNumber = fullUser.phoneNumber; // Store phone number in the session
+        token.email = fullUser.email;
+        token.firstName = fullUser.firstName;
+        token.lastName = fullUser.lastName;
+        token.type = fullUser.type;
+        token.phoneNumber = fullUser.phoneNumber;
+        console.log("Updated token:", token); // Log updated token
       }
 
-      return token; // Return updated session
+      return token;
     },
 
     async session({ session, token }) {
-      console.log("In session", session);
-      // Populate session with token data
+      console.log("Session before update:", session); // Log session before update
       session.user.userId = token.userId;
       session.user.email = token.email;
       session.user.name = token.name;
@@ -78,6 +77,7 @@ export const authOptions = {
       session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
       session.user.phoneNumber = token.phoneNumber;
+      console.log("Session after update:", session); // Log session after update
       return session;
     },
   },
