@@ -1,3 +1,8 @@
+"use client";
+import React from 'react';
+import Sidebar from '../../components/sidebar';
+import { useRouter } from 'next/navigation';
+
 import React from "react";
 import Sidebar from "../../components/sidebar";
 import Header from "@/components/header";
@@ -25,7 +30,13 @@ const dash = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-gray-500">Medicines Available</h2>
             <p className="text-blue-600 text-2xl">298</p>
-            <button className="text-blue-500 mt-2">Visit Inventory</button>
+            <button 
+                  className="text-blue-500 mt-2" 
+                    onClick={() => handleClick('/inventory')} // Navigate to inventory page
+            >
+            Visit Inventory
+            </button>
+
           </div>
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-gray-500">Medicine Shortage</h2>
