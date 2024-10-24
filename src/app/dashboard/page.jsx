@@ -10,7 +10,6 @@ const dash = () => {
       <div className="flex-1 p-6">
         {/* Header */}
         <Header />
-
         {/* Dashboard Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -34,7 +33,6 @@ const dash = () => {
             <button className="text-red-500 mt-2">Resolve Now</button>
           </div>
         </div>
-
         {/* Inventory and Quick Report */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -49,7 +47,6 @@ const dash = () => {
             <p className="text-xl">5,288 Invoices Generated</p>
           </div>
         </div>
-
         {/* Additional Sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           <div className="bg-white p-6 rounded-lg shadow-lg">
