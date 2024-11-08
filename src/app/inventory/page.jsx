@@ -1,15 +1,19 @@
+"use client";
 import React from 'react';
 import Link from 'next/link';
 import Sidebar from '../../components/sidebar';
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-const inventory = () => {
+export default function inventory () {
+  const router = useRouter();
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar/>
     <div className="flex-1 p-6">
     <div className="flex justify-end">
-        <button className="bg-red-500 text-white py-2 px-6 rounded hover:bg-red-600">
+        <button className="bg-red-500 text-white py-2 px-6 rounded hover:bg-red-600"
+        onClick={() => router.push("/addmedicine")}
+        >
           + Add New Item
         </button>
         </div>
@@ -47,6 +51,4 @@ const inventory = () => {
     </div>
     </div>
   );
-};
-
-export default inventory;
+}

@@ -62,3 +62,17 @@ model VerificationToken {
   token        String   @unique
   expires      DateTime
 }
+
+
+model Medicine {
+  medicine_id  Int      @id @default(autoincrement())
+  name         String
+  brand        String
+  groupName    String
+  dosageForm   String
+  strength     String
+  quantity     Int
+  expiryDate   DateTime
+  price        Decimal   @db.Decimal(10, 2)
+  notes        String?   // Optional field
+}

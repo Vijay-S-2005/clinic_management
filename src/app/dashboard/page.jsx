@@ -2,12 +2,16 @@
 import React from 'react';
 import Sidebar from '../../components/sidebar';
 import { useRouter } from 'next/navigation';
-
-import React from "react";
-import Sidebar from "../../components/sidebar";
-import Header from "@/components/header";
+import Header from "../../components/Header"
+// import { useRouter } from 'next/router';import Header from "@/components/header";
 
 const dash = () => {
+  const router = useRouter();
+
+  const handleClick = (path) => {
+      router.push(path); 
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
@@ -32,7 +36,7 @@ const dash = () => {
             <p className="text-blue-600 text-2xl">298</p>
             <button 
                   className="text-blue-500 mt-2" 
-                    onClick={() => handleClick('/inventory')} // Navigate to inventory page
+      onClick={() =>router.push("/inventory")} // Navigate to inventory page
             >
             Visit Inventory
             </button>
