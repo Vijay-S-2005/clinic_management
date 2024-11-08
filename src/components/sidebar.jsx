@@ -1,14 +1,14 @@
 // Sidebar.js
-
-import React from 'react';
-import Link from 'next/link';
+"use client";
+import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Assets } from "../../public/Assets";
 // import { useRouter } from "next/navigation";
 
-
 const Sidebar = () => {
-  // const router = useRouter();
+  const router = useRouter();
   return (
     <div className="w-64 bg-gray-800 text-white">
       <div className="flex items-center justify-center mt-10">
@@ -22,7 +22,7 @@ const Sidebar = () => {
             <div className="flex items-center">
               <h2 className="text-xl font-semibold">Admin Name</h2>
               <button className="ml-4 p-1 text-xs bg-gray-200 rounded-full hover:bg-gray-300">
-                <Image 
+                <Image
                   src={Assets.options}
                   className="h-4 w-4" // Adjust the size of the icon
                   alt="options"
@@ -35,22 +35,85 @@ const Sidebar = () => {
       </div>
       <nav className="mt-10">
         <ul>
-          <li className="py-2 px-6 hover:bg-teal-500">
-            <Link href="/dashboard">Dashboard</Link> 
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/dashboard")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Dashboard
           </li>
-          <li className="py-2 px-6 hover:bg-teal-500">
-            <Link href="/inventory">Inventory</Link> {/* Use Next.js Link */}
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/inventory")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Inventory
           </li>
-          <li className="py-2 px-6 hover:bg-teal-500">
-            <Link href="/orders">orders</Link>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/orders")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Orders
           </li>
-          <li className="py-2 px-6 hover:bg-teal-500">Reports</li>
-          <li className="py-2 px-6 hover:bg-teal-500">Configuration</li>
-          <li className="py-2 px-6 hover:bg-teal-500">Contact Management</li>
-          <li className="py-2 px-6 hover:bg-teal-500">Notifications</li>
-          <li className="py-2 px-6 hover:bg-teal-500">Chat with Visitors</li>
-          <li className="py-2 px-6 hover:bg-teal-500">Application Settings</li>
-          <li className="py-2 px-6 hover:bg-teal-500">Get Technical Help</li>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/Reports")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Reports
+          </li>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/Configuration")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Configuration
+          </li>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/Contact")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Contact Management
+          </li>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/Notifications")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Notifications
+          </li>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/Chat")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Chat with Visitors
+          </li>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/Application_Settings")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Application Settings
+          </li>
+
+          <li
+            className="py-2 px-6 hover:bg-teal-500"
+            onClick={() => router.push("/Help")}
+            style={{ cursor: "pointer" }} // Makes the li look clickable
+          >
+            Get Technical Help
+          </li>
         </ul>
       </nav>
     </div>

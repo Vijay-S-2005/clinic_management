@@ -33,8 +33,8 @@ const Header = () => {
 
   return (
     <div>
-      {" "}
-      {/* Header */}
+      <p>hello</p>
+      {/* {" "}
       <header className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold">Dashboard</h1>
@@ -45,7 +45,7 @@ const Header = () => {
         <div className="flex items-center space-x-4">
           <p>{greetingMessage}</p>
         </div>
-      </header>
+      </header> */}
     </div>
   );
 };
