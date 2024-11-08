@@ -1,11 +1,26 @@
 "use client";
-import React from 'react';
-import Link from 'next/link';
+import React,{useEffect,useState} from 'react';
 import Sidebar from '../../components/sidebar';
 import { useRouter } from "next/navigation";
-
+import axios from 'axios';
 export default function inventory () {
+  const [noOfMedicines, setNoOfMedicines] = useState([]);
   const router = useRouter();
+  useEffect(() => {
+    const fetchMedicinesList = async () => {
+        try {
+            const response = await axios.get('/api/managemedicine');
+            setNoOfMedicines(response.data.data.length);
+
+        } catch (error) {
+            console.error("Error fetching medicines:", error);
+        }
+    };
+    fetchMedicinesList();
+}, []);
+
+
+
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar/>
@@ -23,7 +38,7 @@ export default function inventory () {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
         {/* Medicines Available Card */}
         <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500">
-          <div className="text-blue-500 text-2xl mb-2">298</div>
+          <div className="text-blue-500 text-2xl mb-2">{noOfMedicines}</div>
           <p className="text-lg font-bold">Medicines Available</p>
           <button onClick={() => router.push("/medicinelist")} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
             View Full List &raquo;

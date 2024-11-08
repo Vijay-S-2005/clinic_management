@@ -43,7 +43,7 @@ const Sidebar = () => {
           </li>
           <li className="py-2 px-6 hover:bg-teal-500">
             <Link href="/orders">orders</Link>
-          </li>
+          </li> 
           <li className="py-2 px-6 hover:bg-teal-500">Reports</li>
           <li className="py-2 px-6 hover:bg-teal-500">Configuration</li>
           <li className="py-2 px-6 hover:bg-teal-500">Contact Management</li>

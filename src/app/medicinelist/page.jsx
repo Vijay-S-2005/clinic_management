@@ -9,16 +9,27 @@ export default function Medicinelist() {
     const router = useRouter();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedGroup, setSelectedGroup] = useState('');
+    const [selectedForm, setSelectedForm] = useState('');
+    const [selectedExpiry, setSelectedExpiry] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [medicines, setMedicines] = useState([]);  // State to hold fetched medicines
+    const [medicines, setMedicines] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [forms, setForms] = useState([]);
     const resultsPerPage = 8;
 
-    // Fetch medicines data from backend
+    // Fetch medicines and unique groups/forms from the backend
     useEffect(() => {
         const fetchMedicines = async () => {
             try {
-                const response = await axios.get('/api/managemedicine');  // Adjust endpoint as needed
-                setMedicines(response.data.data);  // Assuming API response structure
+                const response = await axios.get('/api/managemedicine');
+                setMedicines(response.data.data);
+
+                // Extract unique groups and forms from medicines data
+                const uniqueGroups = [...new Set(response.data.data.map(medicine => medicine.groupName))];
+                setGroups(uniqueGroups);
+
+                const uniqueForms = [...new Set(response.data.data.map(medicine => medicine.dosageForm))];
+                setForms(uniqueForms);
             } catch (error) {
                 console.error("Error fetching medicines:", error);
             }
@@ -36,9 +47,21 @@ export default function Medicinelist() {
         setCurrentPage(1);
     };
 
+    const handleFormChange = (e) => {
+        setSelectedForm(e.target.value);
+        setCurrentPage(1);
+    };
+
+    const handleExpiryChange = (e) => {
+        setSelectedExpiry(e.target.value);
+        setCurrentPage(1);
+    };
+
     const filteredMedicines = medicines.filter((medicine) =>
         medicine.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (selectedGroup === '' || medicine.groupName === selectedGroup)
+        (selectedGroup === '' || medicine.groupName === selectedGroup) &&
+        (selectedForm === '' || medicine.dosageForm === selectedForm) &&
+        (selectedExpiry === '' || new Date(medicine.expiryDate) <= new Date(selectedExpiry))
     );
 
     const totalResults = filteredMedicines.length;
@@ -90,9 +113,26 @@ export default function Medicinelist() {
                         onChange={handleGroupChange}
                     >
                         <option value="">- Select Group -</option>
-                        <option value="Generic Medicine">Generic Medicine</option>
-                        <option value="Diabetes">Diabetes</option>
+                        {groups.map((group, index) => (
+                            <option key={index} value={group}>{group}</option>
+                        ))}
                     </select>
+                    <select
+                        className="p-2 border border-gray-300 rounded"
+                        value={selectedForm}
+                        onChange={handleFormChange}
+                    >
+                        <option value="">- Select Form -</option>
+                        {forms.map((form, index) => (
+                            <option key={index} value={form}>{form}</option>
+                        ))}
+                    </select>
+                    <input
+                        type="date"
+                        className="p-2 border border-gray-300 rounded"
+                        value={selectedExpiry}
+                        onChange={handleExpiryChange}
+                    />
                 </div>
 
                 <div className="overflow-x-auto">
