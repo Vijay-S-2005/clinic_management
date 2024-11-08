@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from 'react';
 import Sidebar from '../../../src/components/sidebar';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Addmedicine() {
     // State for form inputs
@@ -20,16 +23,14 @@ export default function Addmedicine() {
     const dosageForms = ['Tablet', 'Capsule', 'Syrup', 'Injection'];
 
     // Handle form submission with validation
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check required fields
         if (!medicineName || !medicineID || !brandName || !medicineGroup || !dosageForm || !strength || !quantity || !expiryDate || !price) {
-            alert("Please fill in all required fields.");
+            toast.error("Please fill in all required fields.");
             return;
         }
 
-        // Data structure for DB storage
         const newMedicine = {
             name: medicineName,
             id: medicineID,
@@ -43,21 +44,27 @@ export default function Addmedicine() {
             notes: notes,
         };
 
-        console.log('New Medicine Details:', newMedicine);
+        try {
+            const response = await axios.post('/api/managemedicine', newMedicine);
+            console.log(response.data);
 
-        // Reset form fields after submission
-        setMedicineName('');
-        setMedicineID('');
-        setBrandName('');
-        setMedicineGroup('');
-        setDosageForm('');
-        setStrength('');
-        setQuantity('');
-        setExpiryDate('');
-        setPrice('');
-        setNotes('');
+            // Clear form fields after successful submission
+            setMedicineName('');
+            setMedicineID('');
+            setBrandName('');
+            setMedicineGroup('');
+            setDosageForm('');
+            setStrength('');
+            setQuantity('');
+            setExpiryDate('');
+            setPrice('');
+            setNotes('');
+            toast.success("Medicine saved successfully!");
+        } catch (error) {
+            console.error("There was an error saving the medicine:", error);
+            toast.error("Error saving medicine. Please try again.");
+        }
     };
-
     return (
       <div className="flex h-screen bg-gray-100">
         <Sidebar />
@@ -189,6 +196,7 @@ export default function Addmedicine() {
                 </form>
             </div>
         </div>
+        <ToastContainer />
       </div>
     );
 }

@@ -25,7 +25,7 @@ export default function inventory () {
         <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-500">
           <div className="text-blue-500 text-2xl mb-2">298</div>
           <p className="text-lg font-bold">Medicines Available</p>
-          <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+          <button onClick={() => router.push("/medicinelist")} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
             View Full List &raquo;
           </button>
         </div>
