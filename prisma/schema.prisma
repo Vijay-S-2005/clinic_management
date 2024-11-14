@@ -23,7 +23,7 @@ model User {
   type         usertype
   createdAt    DateTime  @default(now())
 
-    // Relations
+  // Relations
   accounts     Account[]       // Relation with Account for OAuth providers
   sessions     Session[]       // Relation with Session for session management
 }
@@ -63,16 +63,62 @@ model VerificationToken {
   expires      DateTime
 }
 
-
 model Medicine {
-  medicine_id  Int      @id @default(autoincrement())
-  name         String
-  brand        String
-  groupName    String
-  dosageForm   String
-  strength     String
-  quantity     Int
-  expiryDate   DateTime
-  price        Decimal   @db.Decimal(10, 2)
-  notes        String?   // Optional field
+  medicine_id_auto  Int      @default(autoincrement())
+  medicine_id       String
+  name              String
+  brand             String
+  groupName         String
+  dosageForm        String
+  strength          String
+  quantity          Int
+  expiryDate        DateTime
+  price             Decimal   @db.Decimal(10, 2)
+  notes             String?   // Optional field
+
+  @@unique([medicine_id_auto])
+  @@unique([medicine_id])
+  @@id([medicine_id_auto, medicine_id])
+}
+
+model Patient {
+  patientId      Int      @id @default(autoincrement()) // Auto-incrementing primary key
+  name           String
+  age            Int
+  address        String
+  sex            String
+  height         Float?   // Optional field
+  weight         Float?   // Optional field
+  maritalStatus  String
+  phoneNumber    String
+  email          String?  // Optional field
+  createdAt      DateTime @default(now())              // Optional: Track record creation time
+
+  tokens         Token[]  // Establishes one-to-many relationship with Token
+}
+
+model Token {
+  tokenId      Int       @id @default(autoincrement())  // Auto-incrementing primary key for token
+  tokenNumber  String    @unique                        // Unique token number for each token
+  status       String                                   // Status of the token (e.g., 'active', 'completed')
+  issuedAt     DateTime  @default(now())                // Date and time token was issued
+  called       Boolean   @default(false)                // Tracks if the patient has been called
+  patientId    Int                                      // Foreign key reference to Patient
+
+  // Define relationship with Patient
+  patient      Patient   @relation(fields: [patientId], references: [patientId])
+
+  @@index([patientId])                                 // Index to optimize queries by patientId
+}
+
+
+
+model PatientConsultation {
+  patient_Consultation_id   Int   @id @default(autoincrement())
+  patientId             Int
+  medicine_id_auto      Int
+  consultation_date     DateTime @default(now())
+  no_of_days            Int
+  consuption_session    String
+  dosageForm            String
 }

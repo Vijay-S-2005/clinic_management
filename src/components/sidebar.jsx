@@ -1,11 +1,10 @@
 // Sidebar.js
 
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Assets } from "../../public/Assets";
 // import { useRouter } from "next/navigation";
-
 
 const Sidebar = () => {
   // const router = useRouter();
@@ -22,7 +21,7 @@ const Sidebar = () => {
             <div className="flex items-center">
               <h2 className="text-xl font-semibold">Admin Name</h2>
               <button className="ml-4 p-1 text-xs bg-gray-200 rounded-full hover:bg-gray-300">
-                <Image 
+                <Image
                   src={Assets.options}
                   className="h-4 w-4" // Adjust the size of the icon
                   alt="options"
@@ -36,14 +35,17 @@ const Sidebar = () => {
       <nav className="mt-10">
         <ul>
           <li className="py-2 px-6 hover:bg-teal-500">
-            <Link href="/dashboard">Dashboard</Link> 
+            <Link href="/dashboard">Dashboard</Link>
           </li>
           <li className="py-2 px-6 hover:bg-teal-500">
             <Link href="/inventory">Inventory</Link> {/* Use Next.js Link */}
           </li>
           <li className="py-2 px-6 hover:bg-teal-500">
             <Link href="/orders">orders</Link>
-          </li> 
+          </li>
+          <li className="py-2 px-6 hover:bg-teal-500">
+            <Link href="/managePatient">Manage patients</Link>
+          </li>
           <li className="py-2 px-6 hover:bg-teal-500">Reports</li>
           <li className="py-2 px-6 hover:bg-teal-500">Configuration</li>
           <li className="py-2 px-6 hover:bg-teal-500">Contact Management</li>
