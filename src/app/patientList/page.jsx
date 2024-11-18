@@ -4,6 +4,8 @@ import Link from "next/link";
 import Sidebar from "../../components/sidebar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function PatientList() {
   const router = useRouter();
@@ -17,14 +19,14 @@ export default function PatientList() {
     try {
       console.log("patientId:", patientId);
       const response = await axios.post("/api/manageToken", {
-        params: { patientId: 5 },
+        patientId: patientId,
       });
-      if (response.status === 200) {
-        alert("Token assigned successfully!");
+      if (response.status === 201) {
+        toast.success("Token assigned successfully!");
       }
     } catch (error) {
       console.error("Error assigning token:", error);
-      alert("Failed to assign token.");
+      toast.error("Failed to assign token.");
     }
   };
 
@@ -32,7 +34,7 @@ export default function PatientList() {
   useEffect(() => {
     async function fetchPatients() {
       try {
-        const response = await axios.get("/api/managePatient"); // Adjust the endpoint if necessary
+        const response = await axios.get("/api/managePatient");
         setPatients(response.data);
       } catch (error) {
         console.error("Error fetching patients:", error);
@@ -81,6 +83,7 @@ export default function PatientList() {
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 p-6">
+        <ToastContainer />
         <div className="flex justify-end mb-4">
           <button
             className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"

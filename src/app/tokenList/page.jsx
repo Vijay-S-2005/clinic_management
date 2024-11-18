@@ -1,36 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Sidebar from "../../components/sidebar";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function TokenList() {
   const router = useRouter();
   const [searchName, setSearchName] = useState("");
   const [searchToken, setSearchToken] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [tokens, setTokens] = useState([]); // Remove static data and initialize with empty array
   const resultsPerPage = 8;
 
-  // Static data to display tokens
-  const [tokens, setTokens] = useState([
-    {
-      token_id: 1,
-      tokenNumber: "T-001",
-      patientName: "John Doe",
-      visitDate: "2023-11-10",
-      doctorAssigned: "Dr. Smith",
-      called: false,
-    },
-    {
-      token_id: 2,
-      tokenNumber: "T-002",
-      patientName: "Jane Smith",
-      visitDate: "2023-11-11",
-      doctorAssigned: "Dr. Brown",
-      called: false,
-    },
-    // Add other tokens here...
-  ]);
+  useEffect(() => {
+    // Fetch tokens from the backend
+    async function fetchTokens() {
+      try {
+        const response = await axios.get("/api/manageToken"); // Adjust the endpoint if needed
+        setTokens(response.data);
+      } catch (error) {
+        console.error("Error fetching tokens:", error);
+      }
+    }
+
+    fetchTokens();
+  }, []);
 
   const handleSearchNameChange = (e) => {
     setSearchName(e.target.value);
@@ -42,11 +37,13 @@ export default function TokenList() {
     setCurrentPage(1);
   };
 
-  const filteredTokens = tokens.filter(
-    (token) =>
-      token.patientName.toLowerCase().includes(searchName.toLowerCase()) &&
+  const filteredTokens = tokens.filter((token) => {
+    const patientName = token.patient?.name?.toLowerCase() || "";
+    return (
+      patientName.includes(searchName.toLowerCase()) &&
       token.tokenNumber.includes(searchToken)
-  );
+    );
+  });
 
   const totalResults = filteredTokens.length;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
@@ -69,7 +66,6 @@ export default function TokenList() {
   );
 
   const handleCallToken = (tokenId) => {
-    // Mark the token as called
     setTokens(
       tokens.map((token) =>
         token.token_id === tokenId ? { ...token, called: true } : token
@@ -78,7 +74,6 @@ export default function TokenList() {
   };
 
   const handleConsult = (tokenId) => {
-    // Redirect to the consult page for the specific token
     router.push(`/consultDoctor/${tokenId}`);
   };
 
@@ -132,11 +127,13 @@ export default function TokenList() {
                   }`}
                 >
                   <td className="p-4">{token.tokenNumber}</td>
-                  <td className="p-4">{token.patientName}</td>
+                  <td className="p-4">{token.patient?.name || "Unknown"}</td>
                   <td className="p-4">
                     {new Date(token.visitDate).toLocaleDateString("en-GB")}
                   </td>
-                  <td className="p-4">{token.doctorAssigned}</td>
+                  <td className="p-4">
+                    {token.doctorAssigned || "Suthahar's sister"}
+                  </td>
                   <td className="p-4">
                     <button
                       onClick={() => handleCallToken(token.token_id)}

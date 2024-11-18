@@ -58,3 +58,24 @@ async function createTokenForPatient(patientId) {
 
   return newToken;
 }
+
+export async function GET(request) {
+  try {
+    const tokens = await prisma.token.findMany({
+      include: {
+        patient: true, // Assuming there’s a relation named `patient` for patient details
+      },
+    });
+
+    return new Response(JSON.stringify(tokens), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error fetching tokens:", error);
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
